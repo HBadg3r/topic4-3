@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Define a property for log file directory -->
+    <property name="LOGS" value="./logs" />
+ 
+    <!-- Console appender for general logging -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Set the pattern layout for console logs -->
+        <encoder>
+		    <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+    </appender>
+ 
+    <!-- Special console appender for TRACE level logs from the 'com.gcu' package -->
+    <appender name="GcuConsole" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Only accept TRACE level logs -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- Set the pattern layout for these logs -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+     
+    <!-- Root logger: log everything at INFO level and higher -->
+    <root level="info">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </root>
+ 
+    <!-- Logger for 'com.gcu' package: log at TRACE level and only use specified appenders -->
+    <logger name="com.gcu" level="trace" additivity="false">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="GcuConsole" />
+    </logger>
+</configuration>
