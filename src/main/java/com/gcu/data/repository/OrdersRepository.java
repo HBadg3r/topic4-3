@@ -10,6 +10,6 @@ import com.gcu.entity.OrderEntity;
 public interface OrdersRepository extends CrudRepository<OrderEntity, Long> {
 	//Example of truly overriding a method from the CrudRepository and using our own customized SQL
 	@Override
-	@Query(value = "SELECT * FROM cst339.orders")
+	@Query(value = "SELECT * FROM orders")
 	public List<OrderEntity> findAll();
 }
